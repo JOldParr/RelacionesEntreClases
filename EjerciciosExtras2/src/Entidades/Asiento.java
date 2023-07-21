@@ -6,47 +6,48 @@
 package Entidades;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  *
  * @author Julian
  */
-public class Asiento {
+public class Asiento implements Comparable<Asiento>{
     
-    private ArrayList<Integer> fila;
-    private ArrayList<Integer> columna;
+    private int fila;
+    private String columna;
     private String ocupado;
 
     public Asiento() {
-        this.fila = new ArrayList(8);
-        this.columna = new ArrayList(6);
+        
     }
 
-    public Asiento(int fila, int columna, String ocupado) {
-        this.fila = new ArrayList(8);
-        this.columna = new ArrayList(6);
+    public Asiento(int fila, String columna, String ocupado) {
+        this.fila = fila;
+        this.columna = columna;
         this.ocupado = ocupado;
     }
 
-    public ArrayList<Integer> getFila() {
+    public int getFila() {
         return fila;
     }
 
-    public void setFila(ArrayList<Integer> fila) {
+    public void setFila(int fila) {
         this.fila = fila;
     }
 
-    public ArrayList<Integer> getColumna() {
+    public String getColumna() {
         return columna;
     }
 
-    public void setColumna(ArrayList<Integer> columna) {
+    public void setColumna(String columna) {
         this.columna = columna;
     }
 
     
+
     
-    
+
     public String getOcupado() {
         return ocupado;
     }
@@ -54,7 +55,23 @@ public class Asiento {
     public void setOcupado(String ocupado) {
         this.ocupado = ocupado;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
     
+    @Override
+    public String toString() {
+        return "Asiento{" + "fila=" + fila + ", columna=" + columna + ", ocupado=" + ocupado + '}';
+    }
+
+    @Override
+    public int compareTo(Asiento silla) {
+        return this.fila - silla.getFila();
+        
+    }
     
     
 }

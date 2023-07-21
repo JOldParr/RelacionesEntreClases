@@ -36,8 +36,14 @@ public class main {
         
         Cine c = new Cine(p1, espectadores,15);
         //System.out.println(c.getSala().length);
-        Random random = new Random();
-        System.out.println(random.ints().distinct());
+        //Random random = new Random();
+        //System.out.println(random.ints().distinct());
+        //System.out.println(c.getSala().size());
+        //c.crearCine();
+        c.CineAPP();
+        c.mostrarCine();
+        c.llenarSala();
+        c.mostrarCine();
         
         
         

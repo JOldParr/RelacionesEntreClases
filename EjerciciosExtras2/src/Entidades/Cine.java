@@ -6,7 +6,11 @@
 package Entidades;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -64,26 +68,92 @@ public class Cine {
     }
 
     public void llenarSala() {
+        int puesto;
+        Asiento a;
         for (Espectador aux : espectadores) {
             if (aux.getDinero() >= precioEntrada && aux.getEdad() >= pelicula.getEdadMinima()) {
-                asignarAsiento(aux.getNombre());
+                puesto = asignarAsiento();
+                a = sala.get(puesto);
+                a.setOcupado("Ocupado");
             }
         }
     }
 
-    public void asignarAsiento(String nombre) {
+    public int asignarAsiento() {
+        Random ramdon = new Random();
+        Asiento a;
+        int asientoAsignado = 0;
         if (asientoLibre > 0) {
-            int posicion = new Random().nextInt(48) + 1;
-
+            int posicion = ramdon.nextInt(48) + 1;
+            a = sala.get(posicion);
+            if (a.getOcupado().equalsIgnoreCase("ocupado")) {
+                asignarAsiento();
+            } else {
+                a.setOcupado("ocupado");
+                sala.set(posicion, a);
+                asientoLibre--;
+            }
         }
+        return asientoAsignado;
+    }
+
+    public Asiento crearCine() {
+        Asiento a = new Asiento();
+        for (int fila = 1; fila <= 8; fila++) {
+            for (int columna = 1; columna <= 6; columna++) {
+                switch (columna) {
+                    case 1:
+                        a = new Asiento(fila, "A", "vacio");
+                        sala.add(a);
+                        break;
+                    case 2:
+                        a = new Asiento(fila, "B", "vacio");
+                        sala.add(a);
+                        break;
+                    case 3:
+                        a = new Asiento(fila, "C", "vacio");
+                        sala.add(a);
+                        break;
+                    case 4:
+                        a = new Asiento(fila, "D", "vacio");
+                        sala.add(a);
+                        break;
+                    case 5:
+                        a = new Asiento(fila, "E", "vacio");
+                        sala.add(a);
+                        break;
+                    case 6:
+                        a = new Asiento(fila, "F", "vacio");
+                        sala.add(a);
+                        break;
+                }
+            }
+        }
+
+        return a;
     }
 
     public void CineAPP() {
-        for (int i = 0; i < sala.size(); i++) {
-            
-            
+        Asiento a = crearCine();
+        for (int i = 0; i < 48; i += 2) {
+            a = sala.get(i);
+            a.setOcupado("ocupado");
+            sala.set(i, a);
+            asientoLibre--;
         }
+    }
+    
+    public void mostrarCine(){
+        Collections.sort(sala, (x, y) -> x.getColumna().compareTo(y.getColumna()));
+        Collections.sort(sala);
+        int i = 1;
+        for (Asiento aux : sala) {
 
+            System.out.println((i++) + " " + aux.toString());
+        }
+        System.out.println("");
+        System.out.println("asientos libres:" + asientoLibre);
+    
     }
 
 }
